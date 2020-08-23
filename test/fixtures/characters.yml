@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  discord_user: MyString
+  name: MyString
+  strength: 1
+  athletics: 1
+
+two:
+  discord_user: MyString
+  name: MyString
+  strength: 1
+  athletics: 1

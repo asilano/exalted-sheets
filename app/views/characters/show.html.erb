@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Discord user:</strong>
+  <%= @character.discord_user %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @character.name %>
+</p>
+
+<p>
+  <strong>Strength:</strong>
+  <%= @character.strength %>
+</p>
+
+<p>
+  <strong>Athletics:</strong>
+  <%= @character.athletics %>
+</p>
+
+<%= link_to 'Edit', edit_character_path(@character) %> |
+<%= link_to 'Back', characters_path %>
