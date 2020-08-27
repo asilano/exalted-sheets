@@ -31,3 +31,11 @@
 
 en:
   hello: "Hello world"
+
+  characters:
+    form:
+      dragon_blooded: Dragon Blooded
+      solar: Solar
+      caste:
+        solar: Caste
+        dragon_blooded: Aspect

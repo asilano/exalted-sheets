@@ -1,0 +1,5 @@
+.nested-fields
+  = f.text_field :name
+  = f.number_field :rating
+  = link_to_remove_association f do
+    = inline_svg_tag 'minus.svg'

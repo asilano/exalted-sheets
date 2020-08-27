@@ -1,3 +1,93 @@
 // Place all the styles related to the characters controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+.character-sheet {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+
+  .sheet-col {
+    position: relative;
+    text-align: center;
+
+    &.abilities {
+      grid-row-end: span 4;
+    }
+  }
+
+  input[type=number] {
+    width: 5em;
+  }
+
+  .spacer {
+    height: 21px;
+  }
+
+  .favoured {
+    position: absolute;
+    left: 0;
+  }
+
+  .field {
+    padding: 2px;
+    text-align: right;
+
+    @at-root .character-sheet .abilities .field:nth-of-type(even) {
+      background-color: lightgray;
+    }
+
+    .favoured {
+      margin-top: 1px;
+    }
+  }
+
+  label {
+    display: inline;
+    margin-right: 5px;
+  }
+
+  .header-bar {
+    background-color: #f4d420;
+    border: 2px outset darkgray;
+    text-align: center;
+
+    &.full-width {
+      grid-column: 1 / -1;
+    }
+
+    span {
+      background-color: white;
+      display: inline-block;
+      font-weight: bold;
+      padding: 2px 5px;
+    }
+  }
+
+  .cocoon-links {
+    position: relative;
+  }
+
+  a {
+    &.add_fields {
+      left: 1em;
+      position: absolute;
+      top: 0.5em;
+    }
+    &.remove_fields {
+      left: 5px;
+      position: relative;
+      top: 0.5em;
+    }
+
+    svg {
+      fill: black;
+      width: 2em;
+    }
+
+    &:hover {
+      svg {
+        fill: goldenrod;
+      }
+    }
+  }
+}

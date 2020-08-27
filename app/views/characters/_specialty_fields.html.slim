@@ -1,0 +1,5 @@
+.nested-fields
+  = f.collection_select :ability, Character::ABILITIES, :itself, ->(ab) { ab.to_s.humanize }
+  = f.text_field :situation
+  = link_to_remove_association f do
+    = inline_svg_tag 'minus.svg'

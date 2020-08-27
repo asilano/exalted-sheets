@@ -14,7 +14,7 @@ class CharactersController < ApplicationController
 
   # GET /characters/new
   def new
-    @character = Character.new
+    @character = Character.new(discord_user: params[:discord_user])
   end
 
   # GET /characters/1/edit
@@ -28,7 +28,7 @@ class CharactersController < ApplicationController
 
     respond_to do |format|
       if @character.save
-        format.html { redirect_to @character, notice: 'Character was successfully created.' }
+        format.html { redirect_to edit_character_path(@character), notice: 'Character was successfully created.' }
         format.json { render :show, status: :created, location: @character }
       else
         format.html { render :new }
@@ -42,7 +42,7 @@ class CharactersController < ApplicationController
   def update
     respond_to do |format|
       if @character.update(character_params)
-        format.html { redirect_to @character, notice: 'Character was successfully updated.' }
+        format.html { redirect_to edit_character_path(@character), notice: 'Character was successfully updated.' }
         format.json { render :show, status: :ok, location: @character }
       else
         format.html { render :edit }
@@ -62,13 +62,37 @@ class CharactersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_character
-      @character = Character.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_character
+    @character = Character.find(params[:id])
+  end
 
-    # Only allow a list of trusted parameters through.
-    def character_params
-      params.require(:character).permit(:discord_user, :name, :strength, :athletics)
-    end
+  # Only allow a list of trusted parameters through.
+  def character_params
+    params.require(:character).permit(:discord_user,
+                                      :name,
+                                      :spark,
+                                      :player_name,
+                                      :caste,
+                                      :concept,
+                                      :anima,
+                                      :supernal,
+                                      :lineage,
+                                      *Character::ATTRIBUTES,
+                                      *Character::ABILITIES,
+                                      *Character::ABILITIES.map { |a| "favoured_#{a}" },
+                                      specialties_attributes: %i[
+                                        id
+                                        ability
+                                        situation
+                                        _destroy
+                                      ],
+                                      merits_attributes: %i[
+                                        id
+                                        name
+                                        rating
+                                        _destroy
+                                      ]
+                                     )
+  end
 end

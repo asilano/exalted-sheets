@@ -1,0 +1,104 @@
+= form_with(model: character, local: true) do |form|
+  - if character.errors.any?
+    #error_explanation
+      h2
+        = pluralize(character.errors.count, "error")
+        |  prohibited this character from being saved:
+      ul
+        - character.errors.full_messages.each do |message|
+          li
+            = message
+  .character-sheet
+    .sheet-col.logo
+      = form.select :spark, Character.sparks.map { |key, value| [t(".#{key}"), key] }
+    .sheet-col.top-fields
+      = form.hidden_field :discord_user
+      .field
+        = form.label :name
+        = form.text_field :name
+      .field
+        = form.label :player_name
+        = form.text_field :player_name
+      .field
+        = form.label :caste, t(".caste.#{form.object.spark || 'solar'}")
+        = form.text_field :caste
+    .sheet-col.top-fields
+      .field
+        = form.label :concept
+        = form.text_field :concept
+      .field
+        = form.label :anima
+        = form.text_field :anima
+      .field
+        - case (form.object.spark || 'solar')
+        - when 'solar'
+          = form.label :supernal
+          = form.text_field :supernal
+        - when 'dragon_blooded'
+          = form.label :lineage
+          = form.text_field :lineage
+    .header-bar.full-width
+      span Attributes
+    .sheet-col.attributes
+      .field
+        = form.label :strength
+        = form.number_field :strength
+      .field
+        = form.label :dexterity
+        = form.number_field :dexterity
+      .field
+        = form.label :stamina
+        = form.number_field :stamina
+    .sheet-col.attributes
+      .field
+        = form.label :charisma
+        = form.number_field :charisma
+      .field
+        = form.label :manipulation
+        = form.number_field :manipulation
+      .field
+        = form.label :appearance
+        = form.number_field :appearance
+    .sheet-col.attributes
+      .field
+        = form.label :perception
+        = form.number_field :perception
+      .field
+        = form.label :intelligence
+        = form.number_field :intelligence
+      .field
+        = form.label :wits
+        = form.number_field :wits
+    .header-bar
+      span Abilities
+    .header-bar
+      span Specialties
+    .header-bar
+      span Merits
+    .sheet-col.abilities
+      .spacer:.favoured Fvd
+      - Character::ABILITIES.each do |abil|
+        .field
+          .favoured
+            = form.check_box "favoured_#{abil}"
+          = form.label abil
+          = form.number_field abil
+    .sheet-col
+      .spacer
+      = form.fields_for :specialties do |sf|
+        = render 'specialty_fields', f: sf
+      .cocoon-links
+        = link_to_add_association form, :specialties do
+          = inline_svg_tag('plus.svg')
+    .sheet-col
+      .spacer
+      = form.fields_for :merits do |mf|
+        = render 'merit_fields', f: mf
+      .cocoon-links
+        = link_to_add_association form, :merits do
+          = inline_svg_tag('plus.svg')
+    / .field
+    /   = form.label :athletics
+    /   = form.number_field :athletics
+  .actions
+    = form.submit
