@@ -1,0 +1,10 @@
+.table-row
+  .table-cell
+    = f.collection_select :variety, Intimacy.varieties.keys, :itself, ->(v) { v.to_s.humanize }
+  .table-cell
+    = f.text_field :name
+  .table-cell
+    = f.collection_select :intensity, Intimacy.intensities.keys, :itself, ->(i) { i.to_s.humanize }
+  .table-cell
+    = link_to_remove_association f do
+      = inline_svg_tag 'minus.svg'

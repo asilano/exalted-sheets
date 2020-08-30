@@ -83,22 +83,172 @@
             = form.check_box "favoured_#{abil}"
           = form.label abil
           = form.number_field abil
-    .sheet-col
+    .sheet-col.cocooned
       .spacer
       = form.fields_for :specialties do |sf|
         = render 'specialty_fields', f: sf
       .cocoon-links
         = link_to_add_association form, :specialties do
           = inline_svg_tag('plus.svg')
-    .sheet-col
+    .sheet-col.cocooned
       .spacer
       = form.fields_for :merits do |mf|
         = render 'merit_fields', f: mf
       .cocoon-links
         = link_to_add_association form, :merits do
           = inline_svg_tag('plus.svg')
-    / .field
-    /   = form.label :athletics
-    /   = form.number_field :athletics
+    .header-bar
+      span Willpower
+    .header-bar
+      span Limit break
+    .sheet-col
+      .centred
+        = form.label :remaining_wp, t('.remaining_wp')
+        span
+          => '/'
+        = form.label :permanent_wp, t('.permanent_wp')
+      .field.centred
+        = form.number_field :remaining_wp
+        span
+          => ' /'
+        = form.number_field :permanent_wp
+    .sheet-col
+      .centred
+        = form.label :limit_break
+      .field.centred
+        = form.number_field :limit_break
+    .header-bar
+      span Essence
+    .header-bar
+      span Limit trigger
+    .sheet-col
+      .centred
+        = form.label :permanent_ess, t('.permanent_ess')
+      .field.centred
+        = form.number_field :permanent_ess
+      .centred
+        = form.label :remaining_personal_ess, t('.remaining_personal_ess')
+        span
+          => '/'
+        span
+          | Pool
+      .field.centred
+        = form.number_field :remaining_personal_ess
+        span
+          => ' /'
+        = form.number_field :personal_pool, disabled: true
+      .field.centred
+        = form.number_field :remaining_periph_ess
+        span
+          => ' /'
+        = form.number_field :periph_pool, disabled: true
+      .field.centred
+        = form.label :committed_ess, t('.committed_ess')
+        = form.number_field :committed_ess
+    .sheet-col
+      .centred
+        = form.label :limit_trigger
+      .field.centred
+        = form.text_area :limit_trigger, cols: 40, rows: 10
+    .header-bar
+      span Experience
+    .header-bar
+      span= t(".#{form.object.spark}") + " experience"
+    .sheet-col
+      .field
+        = form.label :unspent_xp, 'Unspent'
+        = form.number_field :unspent_xp
+        = form.label :total_xp, 'Total'
+        = form.number_field :total_xp
+    .sheet-col
+      .field
+        = form.label :unspent_spark_xp, 'Unspent'
+        = form.number_field :unspent_spark_xp
+        = form.label :total_spark_xp, 'Total'
+        = form.number_field :total_spark_xp
+    .header-bar.span-2
+      span Weapons
+    .sheet-col.span-2.cocooned
+      .table
+        .table-row
+          .table-head Wield
+          .table-head Name
+          .table-head Acc.
+          .table-head Dmg.
+          .table-head Def.
+          .table-head Ovw.
+          .table-head Tags
+          .table-head Pool
+          .table-head
+        = form.fields_for :weapons do |wf|
+          = render 'weapon_fields', f: wf
+        .cocoon-links
+          = link_to_add_association form, :weapons do
+            = inline_svg_tag('plus.svg')
+    .header-bar.full-width
+      span Health &amp; Defense
+    .sheet-col.span-2.cocooned
+      .table
+        .table-row
+          .table-head Name
+          .table-head Soak
+          .table-head Hardness
+          .table-head Mob. Pen.
+          .table-head Tags
+          .table-head
+        = form.fields_for :armours do |af|
+          = render 'armour_fields', f: af
+        .cocoon-links
+          = link_to_add_association form, :armours do
+            = inline_svg_tag('plus.svg')
+    .sheet-col.split-2
+      .sheet-col
+        span.label> Parry:
+        span= form.object.parry
+      .sheet-col
+        span.label> Resolve:
+        span= form.object.resolve
+      .sheet-col
+        span.label> Evasion:
+        span= form.object.evasion
+      .sheet-col
+        span.label> Guile:
+        span= form.object.guile
+      .sheet-col
+        span.label> Rush:
+        span= "#{form.object.rush}d"
+      .sheet-col
+        span.label> Disengage:
+        span= "#{form.object.disengage}d"
+      .sheet-col
+        span.label> Join Battle:
+        span= "#{form.object.join_battle}d"
+
+    .sheet-col.span-2
+      span.label> Natural Soak:
+      span= form.object.stamina
+      span.label> Total Soak:
+      span= form.object.soak
+    .sheet-col
+    .sheet-col.full-width
+      .label Health Levels
+      = form.fields_for :health_levels do |hlf|
+        span.small-num = hlf.number_field :penalty
+
+    .header-bar.full-width
+      span Intimacies
+    .sheet-col.full-width.cocooned
+      .table
+        .table-row
+          .table-head Type
+          .table-head Intimacy
+          .table-head Intensity
+          .table-head
+        = form.fields_for :intimacies do |af|
+          = render 'intimacy_fields', f: af
+        .cocoon-links
+          = link_to_add_association form, :intimacies do
+            = inline_svg_tag('plus.svg')
+
   .actions
     = form.submit

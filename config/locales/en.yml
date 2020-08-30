@@ -39,3 +39,8 @@ en:
       caste:
         solar: Caste
         dragon_blooded: Aspect
+      remaining_wp: Remain
+      permanent_wp: Total
+      permanent_ess: Essence
+      committed_ess: Committed
+      remaining_personal_ess: Remain

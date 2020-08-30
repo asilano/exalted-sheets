@@ -15,10 +15,15 @@ class CharactersController < ApplicationController
   # GET /characters/new
   def new
     @character = Character.new(discord_user: params[:discord_user])
+    @character.health_levels = [0, -1, -1, -2, -2, -4, -4].map do |pen|
+      HealthLevel.new(penalty: pen)
+    end
+    8.times { |_| @character.health_levels.build }
   end
 
   # GET /characters/1/edit
   def edit
+    (15 - @character.health_levels.count).times { |_| @character.health_levels.build }
   end
 
   # POST /characters
@@ -62,6 +67,7 @@ class CharactersController < ApplicationController
   end
 
   private
+
   # Use callbacks to share common setup or constraints between actions.
   def set_character
     @character = Character.find(params[:id])
@@ -81,6 +87,18 @@ class CharactersController < ApplicationController
                                       *Character::ATTRIBUTES,
                                       *Character::ABILITIES,
                                       *Character::ABILITIES.map { |a| "favoured_#{a}" },
+                                      :remaining_wp,
+                                      :permanent_wp,
+                                      :limit_break,
+                                      :permanent_ess,
+                                      :remaining_personal_ess,
+                                      :remaining_periph_ess,
+                                      :committed_ess,
+                                      :limit_trigger,
+                                      :unspent_xp,
+                                      :total_xp,
+                                      :unspent_spark_xp,
+                                      :total_spark_xp,
                                       specialties_attributes: %i[
                                         id
                                         ability
@@ -91,6 +109,40 @@ class CharactersController < ApplicationController
                                         id
                                         name
                                         rating
+                                        _destroy
+                                      ],
+                                      weapons_attributes: %i[
+                                        id
+                                        name
+                                        accuracy
+                                        damage
+                                        defence
+                                        overwhelming
+                                        tags
+                                        tags_string
+                                        wielded
+                                        _destroy
+                                      ],
+                                      armours_attributes: %i[
+                                        id
+                                        name
+                                        soak
+                                        hardness
+                                        mobility_penalty
+                                        tags
+                                        tags_string
+                                        _destroy
+                                      ],
+                                      health_levels_attributes: %i[
+                                        id
+                                        penalty
+                                        _destroy
+                                      ],
+                                      intimacies_attributes: %i[
+                                        id
+                                        variety
+                                        name
+                                        intensity
                                         _destroy
                                       ]
                                      )

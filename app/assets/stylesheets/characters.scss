@@ -2,21 +2,63 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
 .character-sheet {
+  align-content: start;
+  align-items: start;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 10px;
+  margin-bottom: 10px;
 
   .sheet-col {
     position: relative;
     text-align: center;
 
     &.abilities {
-      grid-row-end: span 4;
+      grid-row-end: span 9;
+    }
+
+    &.cocooned {
+      padding-bottom: 2em;
+    }
+
+    &.split-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5px;
+    }
+  }
+
+  .full-width {
+    grid-column: 1 / -1;
+  }
+
+  .span-2 {
+    grid-column-end: span 2;
+  }
+
+  .table {
+    display: table;
+
+    .table-row {
+      display: table-row;
+
+      .table-head {
+        display: table-cell;
+        font-weight: bold;
+        padding: 0 5px;
+      }
+
+      .table-cell {
+        display: table-cell;
+      }
     }
   }
 
   input[type=number] {
     width: 5em;
+  }
+  .small-num input[type=number] {
+    width: 3em;
   }
 
   .spacer {
@@ -32,6 +74,10 @@
     padding: 2px;
     text-align: right;
 
+    label {
+      margin-left: 5px;
+    }
+
     @at-root .character-sheet .abilities .field:nth-of-type(even) {
       background-color: lightgray;
     }
@@ -41,19 +87,24 @@
     }
   }
 
+  .centred {
+    text-align: center;
+  }
+
   label {
     display: inline;
     margin-right: 5px;
+  }
+
+  span.label {
+    font-weight: bold;
+    margin-left: 2em;
   }
 
   .header-bar {
     background-color: #f4d420;
     border: 2px outset darkgray;
     text-align: center;
-
-    &.full-width {
-      grid-column: 1 / -1;
-    }
 
     span {
       background-color: white;

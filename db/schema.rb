@@ -10,7 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_27_133533) do
+ActiveRecord::Schema.define(version: 2020_08_29_205424) do
+
+  create_table "armours", force: :cascade do |t|
+    t.integer "character_id", null: false
+    t.string "name"
+    t.integer "soak"
+    t.integer "hardness"
+    t.integer "mobility_penalty"
+    t.string "tags"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["character_id"], name: "index_armours_on_character_id"
+  end
 
   create_table "characters", force: :cascade do |t|
     t.string "discord_user"
@@ -85,6 +97,36 @@ ActiveRecord::Schema.define(version: 2020_08_27_133533) do
     t.boolean "favoured_thrown"
     t.integer "war"
     t.boolean "favoured_war"
+    t.integer "permanent_wp"
+    t.integer "remaining_wp"
+    t.integer "limit_break"
+    t.integer "permanent_ess"
+    t.integer "remain_personal_ess"
+    t.integer "remain_periph_ess"
+    t.integer "committed_ess"
+    t.string "limit_trigger"
+    t.integer "unspent_xp"
+    t.integer "total_xp"
+    t.integer "unspent_spark_xp"
+    t.integer "total_spark_xp"
+  end
+
+  create_table "health_levels", force: :cascade do |t|
+    t.integer "character_id", null: false
+    t.integer "penalty"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["character_id"], name: "index_health_levels_on_character_id"
+  end
+
+  create_table "intimacies", force: :cascade do |t|
+    t.integer "character_id", null: false
+    t.integer "variety"
+    t.string "name"
+    t.integer "intensity"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["character_id"], name: "index_intimacies_on_character_id"
   end
 
   create_table "merits", force: :cascade do |t|
@@ -105,6 +147,24 @@ ActiveRecord::Schema.define(version: 2020_08_27_133533) do
     t.index ["character_id"], name: "index_specialties_on_character_id"
   end
 
+  create_table "weapons", force: :cascade do |t|
+    t.integer "character_id", null: false
+    t.string "name"
+    t.integer "accuracy"
+    t.integer "damage"
+    t.integer "defence"
+    t.integer "overwhelming"
+    t.string "tags"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.boolean "wielded"
+    t.index ["character_id"], name: "index_weapons_on_character_id"
+  end
+
+  add_foreign_key "armours", "characters"
+  add_foreign_key "health_levels", "characters"
+  add_foreign_key "intimacies", "characters"
   add_foreign_key "merits", "characters"
   add_foreign_key "specialties", "characters"
+  add_foreign_key "weapons", "characters"
 end
