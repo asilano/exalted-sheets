@@ -1,0 +1,18 @@
+.table-row
+  .table-cell
+    = f.text_field :name
+  .table-cell
+    = f.collection_select :ability, Character::ABILITIES, :itself, ->(ab) { ab.to_s.humanize }
+  .table-cell
+    = f.text_field :variety
+  .table-cell
+    = f.text_field :duration
+  .table-cell
+    = f.text_field :cost
+  .table-cell
+    = f.text_field :keywords_string
+  .table-cell
+    = f.text_area :effect
+  .table-cell
+    = link_to_remove_association f do
+      = inline_svg_tag 'minus.svg'

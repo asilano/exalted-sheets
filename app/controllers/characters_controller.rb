@@ -144,6 +144,18 @@ class CharactersController < ApplicationController
                                         name
                                         intensity
                                         _destroy
+                                      ],
+                                      charms_attributes: %i[
+                                        id
+                                        name
+                                        ability
+                                        variety
+                                        duration
+                                        cost
+                                        keywords
+                                        keywords_string
+                                        effect
+                                        _destroy
                                       ]
                                      )
   end

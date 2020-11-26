@@ -250,5 +250,24 @@
           = link_to_add_association form, :intimacies do
             = inline_svg_tag('plus.svg')
 
+    .header-bar.full-width
+      span Charms
+    .sheet-col.full-width.cocooned
+      .table
+        .table-row
+          .table-head Name
+          .table-head Ability
+          .table-head Type
+          .table-head Duration
+          .table-head Cost
+          .table-head Keywords
+          .table-head Effect
+          .table-head
+        = form.fields_for :charms do |af|
+          = render 'charm_fields', f: af
+        .cocoon-links
+          = link_to_add_association form, :charms do
+            = inline_svg_tag('plus.svg')
+
   .actions
     = form.submit

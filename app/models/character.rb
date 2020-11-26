@@ -39,7 +39,7 @@ class Character < ApplicationRecord
     war
   ].freeze
 
-  validates *ATTRIBUTES, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 5 }
+   validates *ATTRIBUTES, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 5 }
   ATTRIBUTES.each { |att| attribute att, :integer, default: 1 }
   validates *ABILITIES, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 5 }
   ABILITIES.each { |ab| attribute ab, :integer, default: 0 }
@@ -82,6 +82,8 @@ class Character < ApplicationRecord
   accepts_nested_attributes_for :armours, reject_if: :all_blank, allow_destroy: true
   has_many :intimacies, inverse_of: :character
   accepts_nested_attributes_for :intimacies, reject_if: :all_blank, allow_destroy: true
+  has_many :charms, -> { order 'ability' }, inverse_of: :character
+  accepts_nested_attributes_for :charms, reject_if: :all_blank, allow_destroy: true
   has_many :health_levels, -> { order 'penalty DESC' }, inverse_of: :character
   accepts_nested_attributes_for :health_levels, reject_if: :all_blank, allow_destroy: true
 

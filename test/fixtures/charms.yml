@@ -1,0 +1,21 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  character: one
+  name: MyString
+  ability: MyString
+  variety: 1
+  duration: MyString
+  cost: MyString
+  keywords: MyString
+  effect: MyText
+
+two:
+  character: two
+  name: MyString
+  ability: MyString
+  variety: 1
+  duration: MyString
+  cost: MyString
+  keywords: MyString
+  effect: MyText
