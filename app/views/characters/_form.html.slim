@@ -1,3 +1,4 @@
+= javascript_pack_tag 'characters'
 = form_with(model: character, local: true) do |form|
   - if character.errors.any?
     #error_explanation
@@ -20,7 +21,8 @@
         = form.label :player_name
         = form.text_field :player_name
       .field
-        = form.label :caste, t(".caste.#{form.object.spark || 'solar'}")
+        = form.label :caste, t(".caste.#{form.object.spark || 'solar'}"),
+                             data: { spark: { solar: t('.caste.solar'), dragon_blooded: t('.caste.dragon_blooded') } }
         = form.text_field :caste
     .sheet-col.top-fields
       .field
@@ -29,14 +31,12 @@
       .field
         = form.label :anima
         = form.text_field :anima
-      .field
-        - case (form.object.spark || 'solar')
-        - when 'solar'
-          = form.label :supernal
-          = form.text_field :supernal
-        - when 'dragon_blooded'
-          = form.label :lineage
-          = form.text_field :lineage
+      .field class=('hidden' unless form.object.spark == 'solar') data={ 'spark-show' => 'solar' }
+        = form.label :supernal
+        = form.text_field :supernal
+      .field class=('hidden' unless form.object.spark == 'dragon_blooded') data={ 'spark-show' => 'dragon_blooded' }
+        = form.label :lineage
+        = form.text_field :lineage
     .header-bar.full-width
       span Attributes
     .sheet-col.attributes
@@ -125,7 +125,7 @@
       .centred
         = form.label :permanent_ess, t('.permanent_ess')
       .field.centred
-        = form.number_field :permanent_ess
+        = form.number_field :permanent_ess, data: { recalc: true }
       .centred
         = form.label :remaining_personal_ess, t('.remaining_personal_ess')
         span
@@ -136,12 +136,14 @@
         = form.number_field :remaining_personal_ess
         span
           => ' /'
-        = form.number_field :personal_pool, disabled: true
+        = form.number_field :personal_pool, disabled: true, data: { 'spark-fn' => 'personal_pool' }
+        span.pool-name Personal
       .field.centred
         = form.number_field :remaining_periph_ess
         span
           => ' /'
-        = form.number_field :periph_pool, disabled: true
+        = form.number_field :periph_pool, disabled: true, data: { 'spark-fn' => 'periph_pool' }
+        span.pool-name Peripheral
       .field.centred
         = form.label :committed_ess, t('.committed_ess')
         = form.number_field :committed_ess
@@ -153,7 +155,8 @@
     .header-bar
       span Experience
     .header-bar
-      span= t(".#{form.object.spark}") + " experience"
+      span data=({ spark: %Q({ "solar": "#{t('.solar')} experience", "dragon_blooded": "#{t('.dragon_blooded')} experience" }) })
+        = t(".#{form.object.spark}") + " experience"
     .sheet-col
       .field
         = form.label :unspent_xp, 'Unspent'
