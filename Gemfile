@@ -25,6 +25,10 @@ gem 'slim-rails'
 gem 'cocoon'
 gem 'inline_svg'
 
+gem 'devise'
+gem 'omniauth-google-oauth2'
+gem 'omniauth-discord'
+
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 

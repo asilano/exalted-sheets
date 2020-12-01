@@ -1,5 +1,6 @@
 class CharactersController < ApplicationController
-  before_action :set_character, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
+  before_action :set_character, only: %i[show edit update destroy]
 
   # GET /characters
   # GET /characters.json

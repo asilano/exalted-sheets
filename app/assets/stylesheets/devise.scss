@@ -1,0 +1,45 @@
+body.devise {
+  align-items: center;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  left: 0;
+  position: absolute;
+  right: 0;
+
+  .centraliser {
+    background-color: adjust-color($color: goldenrod, $lightness: 35%, $saturation: 10%);
+    box-shadow: grey 0 0 5px 5px;
+    padding: 10px;
+  }
+
+  .oauth {
+    img {
+      &.pressed, &.focus {
+        display: none;
+      }
+    }
+
+    &:hover {
+      img {
+        &.default {
+          display: none;
+        }
+        &.focus {
+          display: inline;
+        }
+      }
+    }
+
+    &:active {
+      img {
+        &.default, &.focus {
+          display: none;
+        }
+        &.pressed {
+          display: inline;
+        }
+      }
+    }
+  }
+}

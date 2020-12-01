@@ -7,5 +7,16 @@ html
     = csp_meta_tag
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
-  body
+  body class=controller_name class=action_name
+    - if current_user
+      .user-bar
+        span.signed-in-as
+          ' Signed in as:
+          = link_to current_user.email, edit_user_registration_path
+        span.middot &middot;
+        span.discord-link
+          | Not linked to Discord!
+        span.sign-out= link_to 'Sign out', destroy_user_session_path, method: :delete
+    p#notice= notice
+    p#alert=  alert
     = yield

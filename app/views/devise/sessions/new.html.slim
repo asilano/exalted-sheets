@@ -1,0 +1,36 @@
+h2
+  | Log in
+= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+  .field
+    = f.label :email
+    br
+    = f.email_field :email, autofocus: true, autocomplete: "email"
+  .field
+    = f.label :password
+    br
+    = f.password_field :password, autocomplete: "current-password"
+  - if devise_mapping.rememberable?
+    .field
+      = f.check_box :remember_me
+      = f.label :remember_me
+  .actions
+    = f.submit "Log in"
+    hr
+    .oauth= link_to user_google_oauth2_omniauth_authorize_path, title: 'Sign in with Google' do
+      = image_tag 'btn_google_signin_light_normal_web.png', srcset: { 'btn_google_signin_light_normal_web.png' => '1x',
+                                                                      'btn_google_signin_light_normal_web@2x.png' => '2x' },
+                                                            width: 191,
+                                                            class: 'default'
+      = image_tag 'btn_google_signin_light_pressed_web.png', srcset: { 'btn_google_signin_light_pressed_web.png' => '1x',
+                                                                      'btn_google_signin_light_pressed_web@2x.png' => '2x' },
+                                                            width: 191,
+                                                            class: 'pressed'
+      = image_tag 'btn_google_signin_light_focus_web.png', srcset: { 'btn_google_signin_light_focus_web.png' => '1x',
+                                                                      'btn_google_signin_light_focus_web@2x.png' => '2x' },
+                                                            width: 191,
+                                                            class: 'focus'
+    .oauth= link_to user_discord_omniauth_authorize_path, title: 'Sign in with Discord' do
+      = image_tag 'Discord-Logo-Wordmark-Color.png', width: 191, class: 'default'
+      = image_tag 'Discord-Logo-Wordmark-Black.png', width: 191, class: 'pressed'
+      = image_tag 'Discord-Logo-Wordmark-Black.png', width: 191, class: 'focus'
+= render "devise/shared/links"

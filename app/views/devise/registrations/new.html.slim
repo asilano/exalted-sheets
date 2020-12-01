@@ -1,0 +1,43 @@
+h2
+  | Sign up
+= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
+  = render "devise/shared/error_messages", resource: resource
+  .field
+    = f.label :email
+    br
+    = f.email_field :email, autofocus: true, autocomplete: "email"
+  .field
+    = f.label :password
+    - if @minimum_password_length
+      em
+        | (
+        = @minimum_password_length
+        |  characters minimum)
+    br
+    = f.password_field :password, autocomplete: "new-password"
+  .field
+    = f.label :password_confirmation
+    br
+    = f.password_field :password_confirmation, autocomplete: "new-password"
+  .actions
+    = f.submit "Sign up"
+    hr
+    .oauth= link_to user_google_oauth2_omniauth_authorize_path, title: 'Sign in with Google' do
+      = image_tag 'btn_google_signin_light_normal_web.png', srcset: { 'btn_google_signin_light_normal_web.png' => '1x',
+                                                                      'btn_google_signin_light_normal_web@2x.png' => '2x' },
+                                                            width: 191,
+                                                            class: 'default'
+      = image_tag 'btn_google_signin_light_pressed_web.png', srcset: { 'btn_google_signin_light_pressed_web.png' => '1x',
+                                                                      'btn_google_signin_light_pressed_web@2x.png' => '2x' },
+                                                            width: 191,
+                                                            class: 'pressed'
+      = image_tag 'btn_google_signin_light_focus_web.png', srcset: { 'btn_google_signin_light_focus_web.png' => '1x',
+                                                                      'btn_google_signin_light_focus_web@2x.png' => '2x' },
+                                                            width: 191,
+                                                            class: 'focus'
+    .oauth= link_to user_discord_omniauth_authorize_path, title: 'Sign in with Discord' do
+      = image_tag 'Discord-Logo-Wordmark-Color.png', width: 191, class: 'default'
+      = image_tag 'Discord-Logo-Wordmark-Black.png', width: 191, class: 'pressed'
+      = image_tag 'Discord-Logo-Wordmark-Black.png', width: 191, class: 'focus'
+    = link_to "Sign in with Discord", user_discord_omniauth_authorize_path
+= render "devise/shared/links"

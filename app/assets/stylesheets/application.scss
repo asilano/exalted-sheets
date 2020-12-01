@@ -13,11 +13,38 @@
  *= require_tree .
  *= require_self
  */
+
+html {
+  min-height: 100%;
+}
+
 body {
   margin: 0 auto;
   max-width: 1000px;
 }
 
+.centre {
+  text-align: center;
+}
+
 .hidden {
   display: none;
+}
+
+.user-bar {
+  background-color: white;
+  border-bottom: 2px solid black;
+  padding: 5px 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+
+  .discord-link, .middot {
+    margin-left: 10px;
+  }
+
+  .sign-out {
+    position: absolute;
+    right: 0;
+  }
 }

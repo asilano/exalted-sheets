@@ -1,0 +1,18 @@
+doctype html
+html
+  head
+    title
+      | ExaltedSheets
+    = csrf_meta_tags
+    = csp_meta_tag
+    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
+  body.devise class=controller_name class=action_name
+    .centraliser
+      h1.centre Exalted Character Sheets
+      h3.centre for Discord
+      p#notice= notice
+      p#alert=  alert
+      = yield
+      - if current_user
+        .sign-out= link_to 'Sign out', destroy_user_session_path, method: :delete

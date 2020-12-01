@@ -39,9 +39,9 @@ class Character < ApplicationRecord
     war
   ].freeze
 
-   validates *ATTRIBUTES, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 5 }
+  validates(*ATTRIBUTES, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 5 })
   ATTRIBUTES.each { |att| attribute att, :integer, default: 1 }
-  validates *ABILITIES, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 5 }
+  validates(*ABILITIES, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 5 })
   ABILITIES.each { |ab| attribute ab, :integer, default: 0 }
   attribute :permanent_wp, :integer, default: 1
   validates :permanent_wp, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 10 }
@@ -114,16 +114,16 @@ class Character < ApplicationRecord
     ability = weapons.where(wielded: true).first&.ability || :brawl
     return 0 if %i[archery thrown].include? ability
 
-    (dexterity + send(ability) + 1)/2
+    (dexterity + send(ability) + 1) / 2
   end
   def evasion
-    (dexterity + dodge + 1)/2
+    (dexterity + dodge + 1) / 2
   end
   def guile
-    (manipulation + socialise + 1)/2
+    (manipulation + socialise + 1) / 2
   end
   def resolve
-    (wits + integrity + 1)/2
+    (wits + integrity + 1) / 2
   end
 
   # Pools
