@@ -21,7 +21,17 @@ module Users
     end
 
     def discord
-      all 'Discord'
+      if current_user
+        if current_user.discord_uid.present?
+          flash.alert = 'Already linked to a Discord account'
+        else
+          current_user.update(discord_uid: request.env['omniauth.auth'].uid)
+          flash.notice = 'Successfully linked with your Discord account'
+        end
+        redirect_to edit_user_registration_path
+      else
+        all 'Discord'
+      end
     end
   end
 end

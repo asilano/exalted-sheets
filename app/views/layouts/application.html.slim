@@ -15,7 +15,11 @@ html
           = link_to current_user.email, edit_user_registration_path
         span.middot &middot;
         span.discord-link
-          | Not linked to Discord!
+          - if current_user.discord_uid.present?
+            ' Linked to Discord account
+            span.discord-name= current_user.discord_name
+          - else
+            | Not linked to Discord!
         span.sign-out= link_to 'Sign out', destroy_user_session_path, method: :delete
     p#notice= notice
     p#alert=  alert

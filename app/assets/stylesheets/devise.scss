@@ -13,6 +13,10 @@ body.devise {
     padding: 10px;
   }
 
+  i {
+    display: block;
+  }
+
   .oauth {
     img {
       &.pressed, &.focus {
@@ -41,5 +45,12 @@ body.devise {
         }
       }
     }
+  }
+
+  .discord-name {
+    font-weight: bold;
+  }
+  .discord-unlinked {
+    font-weight: bold;
   }
 }

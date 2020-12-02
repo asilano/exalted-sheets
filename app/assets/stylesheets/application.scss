@@ -42,7 +42,9 @@ body {
   .discord-link, .middot {
     margin-left: 10px;
   }
-
+  .discord-name {
+    font-weight: bold;
+  }
   .sign-out {
     position: absolute;
     right: 0;

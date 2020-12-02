@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
-  devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
+  devise_for :users, controllers: {
+    omniauth_callbacks: 'users/omniauth_callbacks',
+    registrations:      'users/registrations'
+  }
+  devise_scope :user do
+    put '/unlink', to: 'users/registrations#unlink_discord', as: :unlink_discord_from_user
+  end
   resources :characters, except: :show
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
