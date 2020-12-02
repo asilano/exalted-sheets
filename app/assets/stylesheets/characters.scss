@@ -1,6 +1,22 @@
 // Place all the styles related to the characters controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+#character-table {
+  border-collapse: collapse;
+  thead {
+    border-bottom: 1px solid black;
+  }
+  th, td {
+    padding: 5px;
+    text-align: left;
+  }
+  tbody {
+    tr:nth-of-type(even) {
+      background-color: lightgray;
+    }
+  }
+}
+
 .character-sheet {
   align-content: start;
   align-items: start;

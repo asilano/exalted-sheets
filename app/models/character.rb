@@ -45,7 +45,7 @@ class Character < ApplicationRecord
   ABILITIES.each { |ab| attribute ab, :integer, default: 0 }
   attribute :permanent_wp, :integer, default: 1
   validates :permanent_wp, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 10 }
-  attribute :remaining_wp, :integer, default: :permanent_wp
+  attribute :remaining_wp, :integer, default: 1
   validates :remaining_wp, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: :permanent_wp }
   attribute :limit_break, :integer, default: 0
   validates :limit_break, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 10 }
@@ -71,6 +71,8 @@ class Character < ApplicationRecord
     solar:          1
   }
   attribute :spark, :integer, default: 0
+
+  belongs_to :user
 
   has_many :specialties, inverse_of: :character
   accepts_nested_attributes_for :specialties, reject_if: :all_blank, allow_destroy: true

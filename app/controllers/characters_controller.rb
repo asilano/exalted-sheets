@@ -5,7 +5,7 @@ class CharactersController < ApplicationController
   # GET /characters
   # GET /characters.json
   def index
-    @characters = Character.all
+    @characters = current_user.characters
   end
 
   # GET /characters/1
@@ -15,7 +15,7 @@ class CharactersController < ApplicationController
 
   # GET /characters/new
   def new
-    @character = Character.new(discord_user: params[:discord_user])
+    @character = current_user.characters.build
     @character.health_levels = [0, -1, -1, -2, -2, -4, -4].map do |pen|
       HealthLevel.new(penalty: pen)
     end
@@ -30,7 +30,7 @@ class CharactersController < ApplicationController
   # POST /characters
   # POST /characters.json
   def create
-    @character = Character.new(character_params)
+    @character = current_user.characters.build(character_params)
 
     respond_to do |format|
       if @character.save
@@ -71,7 +71,12 @@ class CharactersController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_character
-    @character = Character.find(params[:id])
+    @character = current_user.characters.find_by(id: params[:id])
+
+    return unless @character.nil?
+
+    flash.alert = 'You don\'t have permission to manage that character.'
+    redirect_to characters_path
   end
 
   # Only allow a list of trusted parameters through.

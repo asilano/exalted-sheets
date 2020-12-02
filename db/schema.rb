@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_01_143905) do
+ActiveRecord::Schema.define(version: 2020_12_02_082531) do
 
   create_table "armours", force: :cascade do |t|
     t.integer "character_id", null: false
@@ -109,6 +109,8 @@ ActiveRecord::Schema.define(version: 2020_12_01_143905) do
     t.integer "total_xp"
     t.integer "unspent_spark_xp"
     t.integer "total_spark_xp"
+    t.integer "user_id", null: false
+    t.index ["user_id"], name: "index_characters_on_user_id"
   end
 
   create_table "charms", force: :cascade do |t|
@@ -195,6 +197,7 @@ ActiveRecord::Schema.define(version: 2020_12_01_143905) do
   end
 
   add_foreign_key "armours", "characters"
+  add_foreign_key "characters", "users"
   add_foreign_key "charms", "characters"
   add_foreign_key "health_levels", "characters"
   add_foreign_key "intimacies", "characters"
