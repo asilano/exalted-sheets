@@ -1,14 +1,9 @@
-.table-row
-  .table-cell
-    = f.text_field :name
-  .table-cell
-    = f.number_field :soak
-  .table-cell
-    = f.number_field :hardness
-  .table-cell
-    = f.number_field :mobility_penalty
-  .table-cell
-    = f.text_field :tags_string
+.table-row.armour-fields
+  .table-cell.name= f.text_field :name
+  .table-cell.soak= f.number_field :soak
+  .table-cell.hardness= f.number_field :hardness
+  .table-cell.mob_pen= f.number_field :mobility_penalty
+  .table-cell.tags= f.text_field :tags_string
   .table-cell
     = link_to_remove_association f do
-      = inline_svg_tag 'minus.svg'
+      = inline_svg_tag 'minus.svg', data: { wrapper_class: 'armour-fields' }

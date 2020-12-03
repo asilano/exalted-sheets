@@ -16,9 +16,27 @@ function periph_pool(spark) {
     return 23 + perm_ess * 4
 }
 
+const field_int = (field) => parseInt("0"+ field.value);
+const sum = (total, val) => total + val;
+
+function nat_soak() {
+  return parseInt($('#character_stamina')[0].value)
+}
+
+function soak() {
+  var armour_soak = 0
+  var armour_fields = $('.armour-fields .soak input')
+  if (armour_fields.length > 0)
+    armour_soak = armour_fields.map(field_int).reduce(sum, 0)
+
+  return parseInt($('#character_stamina')[0].value) + armour_soak
+}
+
 const utils = {
   'personal_pool': personal_pool,
-  'periph_pool':   periph_pool
+  'periph_pool':   periph_pool,
+  'nat_soak':      nat_soak,
+  'soak':          soak
 }
 
 
@@ -40,11 +58,21 @@ function recalc() {
     if (typeof fn === "function")
       elem.value = fn(spark)
   }
+
+  for (elem of $('[data-inner-html]')) {
+    var fn = utils[elem.dataset.innerHtml];
+    if (typeof fn === "function")
+      elem.innerHTML = fn()
+  }
 }
 
 document.addEventListener('turbolinks:load', () => {
-  $('#character_spark')[0].addEventListener('change', recalc)
-  for (var elem of $('[data-recalc]'))
-    elem.addEventListener('change', recalc)
+  // $('#character_spark')[0].addEventListener('change', recalc)
+  // for (var elem of $('[data-recalc]'))
+  //   elem.addEventListener('change', recalc)
+  // for (var elem of $('input, select'))
+  //   elem.addEventListener('change', recalc)
+  $('form')[0].addEventListener('change', recalc)
+  $('form')[0].addEventListener('cocoon:after-insert', recalc)
+  $('form')[0].addEventListener('cocoon:after-remove', recalc)
 })
-

@@ -229,9 +229,9 @@
 
     .sheet-col.span-2
       span.label> Natural Soak:
-      span= form.object.stamina
+      span data=({ "inner-html" => "nat_soak" }) = form.object.stamina
       span.label> Total Soak:
-      span= form.object.soak
+      span data=({ "inner-html" => "soak" }) = form.object.soak
     .sheet-col
     .sheet-col.full-width
       .label Health Levels
