@@ -113,10 +113,11 @@ class Character < ApplicationRecord
 
   # Static values - pool/2 round up
   def parry
-    ability = weapons.where(wielded: true).first&.ability || :brawl
+    weapon = weapons.where(wielded: true).first
+    ability = weapon&.ability || :brawl
     return 0 if %i[archery thrown].include? ability
 
-    (dexterity + send(ability) + 1) / 2
+    (dexterity + send(ability) + 1) / 2 + (weapon&.defence || 0)
   end
   def evasion
     (dexterity + dodge + 1) / 2

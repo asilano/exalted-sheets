@@ -1,11 +1,11 @@
 .table-row.weapon-fields
-  .table-cell= f.check_box :wielded
+  .table-cell.wielded= f.check_box :wielded
   .table-cell= f.text_field :name
   .table-cell.small-num= f.number_field :accuracy
   .table-cell.small-num= f.number_field :damage
-  .table-cell.small-num= f.number_field :defence
+  .table-cell.small-num.defence= f.number_field :defence
   .table-cell.small-num= f.number_field :overwhelming
-  .table-cell= f.text_field :tags_string
+  .table-cell.tags= f.text_field :tags_string
   .table-cell= f.object.pool
   .table-cell
     = link_to_remove_association f do

@@ -207,25 +207,25 @@
     .sheet-col.split-2
       .sheet-col
         span.label> Parry:
-        span= form.object.parry
+        span data=({ "inner-html" => "parry" }) = form.object.parry
       .sheet-col
         span.label> Resolve:
-        span= form.object.resolve
+        span data=({ "inner-html" => "resolve" }) = form.object.resolve
       .sheet-col
         span.label> Evasion:
-        span= form.object.evasion
+        span data=({ "inner-html" => "evasion" }) = form.object.evasion
       .sheet-col
         span.label> Guile:
-        span= form.object.guile
+        span data=({ "inner-html" => "guile" }) = form.object.guile
       .sheet-col
         span.label> Rush:
-        span= "#{form.object.rush}d"
+        span data=({ "inner-html" => "rush_d" }) = "#{form.object.rush}d"
       .sheet-col
         span.label> Disengage:
-        span= "#{form.object.disengage}d"
-      .sheet-col
+        span data=({ "inner-html" => "disengage_d" }) = "#{form.object.disengage}d"
+      .sheet-col.span-2
         span.label> Join Battle:
-        span= "#{form.object.join_battle}d"
+        span data=({ "inner-html" => "join_d" }) = "#{form.object.join_battle}d"
 
     .sheet-col.span-2
       span.label> Natural Soak:
