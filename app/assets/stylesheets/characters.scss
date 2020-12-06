@@ -17,7 +17,7 @@
   }
 }
 
-.character-sheet {
+.grid {
   align-content: start;
   align-items: start;
   display: grid;
@@ -33,10 +33,6 @@
       grid-row-end: span 9;
     }
 
-    &.cocooned {
-      padding-bottom: 2em;
-    }
-
     &.split-2 {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -50,6 +46,17 @@
 
   .span-2 {
     grid-column-end: span 2;
+  }
+
+  .tall {
+    height: 100%
+  }
+
+}
+
+.character-sheet {
+  .cocooned {
+    padding-bottom: 2em;
   }
 
   .table {
@@ -75,6 +82,13 @@
   }
   .small-num input[type=number] {
     width: 3em;
+  }
+  .long-field input {
+    width: 100%;
+  }
+  .large-area textarea {
+    height: 100%;
+    width: 100%;
   }
 
   .spacer {

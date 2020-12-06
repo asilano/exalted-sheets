@@ -1,11 +1,24 @@
-.table-row.charm-fields
-  .table-cell= f.text_field :name
-  .table-cell= f.collection_select :ability, Character::ABILITIES, :itself, ->(ab) { ab.to_s.humanize }
-  .table-cell= f.text_field :variety
-  .table-cell= f.text_field :duration
-  .table-cell= f.text_field :cost
-  .table-cell= f.text_field :keywords_string
-  .table-cell= f.text_area :effect
-  .table-cell
+.charm-fields.sheet-col.full-width.grid
+  .sheet-col.full-width.field.long-field
+    = f.text_field :name, placeholder: 'Name'
+  .sheet-col.split-2
+    .sheet-col
+      .field
+        = f.select :ability, Character::ABILITIES.map { |ab| [ab.to_s.humanize, ab] }
+    .sheet-col
+      .field
+        = f.select :variety, Charm::varieties.map { |k, v| [k.humanize, k] }
+    .sheet-col.span-2
+      .field.long-field
+        = f.text_field :duration, placeholder: 'Duration'
+    .sheet-col.span-2
+      .field.long-field
+        = f.text_field :cost, placeholder: 'Cost'
+    .sheet-col.span-2
+      .field.long-field
+        = f.text_field :keywords_string, placeholder: 'Keywords'
+  .sheet-col.span-2.tall.large-area
+    = f.text_area :effect
+  .sheet-col
     = link_to_remove_association f do
       = inline_svg_tag 'minus.svg', data: { wrapper_class: 'charm-fields' }

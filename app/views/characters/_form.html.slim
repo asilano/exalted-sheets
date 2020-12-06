@@ -9,7 +9,7 @@
         - character.errors.full_messages.each do |message|
           li
             = message
-  .character-sheet
+  .character-sheet.grid
     .sheet-col.logo
       = form.select :spark, Character.sparks.map { |key, value| [t(".#{key}"), key] }
     .sheet-col.top-fields
@@ -255,22 +255,12 @@
 
     .header-bar.full-width
       span Charms
-    .sheet-col.full-width.cocooned
-      .table
-        .table-row
-          .table-head Name
-          .table-head Ability
-          .table-head Type
-          .table-head Duration
-          .table-head Cost
-          .table-head Keywords
-          .table-head Effect
-          .table-head
-        = form.fields_for :charms do |af|
-          = render 'charm_fields', f: af
-        .cocoon-links
-          = link_to_add_association form, :charms do
-            = inline_svg_tag('plus.svg')
+    = form.fields_for :charms do |af|
+      = render 'charm_fields', f: af
+    .cocooned
+      .cocoon-links
+        = link_to_add_association form, :charms do
+          = inline_svg_tag('plus.svg')
 
   .actions
     = form.submit
