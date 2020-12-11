@@ -29,6 +29,9 @@ gem 'devise'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-discord'
 
+gem 'grape'
+gem 'grape_on_rails_routes'
+
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 

@@ -18,5 +18,7 @@ Rails.application.routes.draw do
     end
   }
 
+  mount DiscordBot::API => '/'
+
   root to: 'characters#index'
 end

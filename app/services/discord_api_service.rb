@@ -1,4 +1,4 @@
-class DiscordApiService
+class DiscordAPIService
   BOT_TOKEN = 'Bot ' + ENV['EXALTED_DISCORD_BOT_TOKEN']
 
   def self.username(discord_uid)

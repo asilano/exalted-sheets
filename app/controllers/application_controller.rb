@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
 
   def get_discord_name
     if current_user&.discord_uid.present?
-      current_user.discord_name = DiscordApiService.username(current_user.discord_uid)
+      current_user.discord_name = DiscordAPIService.username(current_user.discord_uid)
     end
   end
 end
