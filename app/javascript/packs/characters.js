@@ -132,6 +132,17 @@ function recalc() {
   }
 }
 
+function next_damage() {
+  const values = ['ok', 'bashing', 'lethal', 'aggravated']
+  var field = this.nextSibling
+  var old_val = field.value
+  var old_ix = values.indexOf(old_val)
+  var new_val = values[(old_ix + 1) % values.length]
+
+  field.value = new_val
+  this.innerHTML = new_val[0].toUpperCase()
+}
+
 document.addEventListener('turbolinks:load', () => {
   // $('#character_spark')[0].addEventListener('change', recalc)
   // for (var elem of $('[data-recalc]'))
@@ -141,4 +152,7 @@ document.addEventListener('turbolinks:load', () => {
   $('form')[0].addEventListener('change', recalc)
   $('form')[0].addEventListener('cocoon:after-insert', recalc)
   $('form')[0].addEventListener('cocoon:after-remove', recalc)
+
+  for (var elem of $('.damaged'))
+    elem.addEventListener('click', next_damage)
 })

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_06_144251) do
+ActiveRecord::Schema.define(version: 2021_01_19_120712) do
 
   create_table "armours", force: :cascade do |t|
     t.integer "character_id", null: false
@@ -101,8 +101,8 @@ ActiveRecord::Schema.define(version: 2020_12_06_144251) do
     t.integer "remaining_wp"
     t.integer "limit_break"
     t.integer "permanent_ess"
-    t.integer "remain_personal_ess"
-    t.integer "remain_periph_ess"
+    t.integer "remaining_personal_ess"
+    t.integer "remaining_periph_ess"
     t.integer "committed_ess"
     t.string "limit_trigger"
     t.integer "unspent_xp"
@@ -111,6 +111,7 @@ ActiveRecord::Schema.define(version: 2020_12_06_144251) do
     t.integer "total_spark_xp"
     t.integer "user_id", null: false
     t.integer "discord_server_uid"
+    t.integer "anima_level"
     t.index ["user_id"], name: "index_characters_on_user_id"
   end
 
@@ -130,9 +131,10 @@ ActiveRecord::Schema.define(version: 2020_12_06_144251) do
 
   create_table "health_levels", force: :cascade do |t|
     t.integer "character_id", null: false
-    t.integer "penalty"
+    t.string "penalty"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "damaged", default: 0
     t.index ["character_id"], name: "index_health_levels_on_character_id"
   end
 

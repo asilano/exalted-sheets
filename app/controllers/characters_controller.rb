@@ -100,6 +100,7 @@ class CharactersController < ApplicationController
                                       :remaining_personal_ess,
                                       :remaining_periph_ess,
                                       :committed_ess,
+                                      :anima_level,
                                       :limit_trigger,
                                       :unspent_xp,
                                       :total_xp,
@@ -142,6 +143,7 @@ class CharactersController < ApplicationController
                                       health_levels_attributes: %i[
                                         id
                                         penalty
+                                        damaged
                                         _destroy
                                       ],
                                       intimacies_attributes: %i[

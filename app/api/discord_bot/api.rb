@@ -32,5 +32,32 @@ module DiscordBot
         end
       end
     end
+
+    namespace :characters do
+      route_param :id, type: Integer do
+        before do
+          @character = Character.find(params[:id])
+        end
+        mount Characters
+      end
+
+      namespace :discord do
+        route_param :user_id, type: Integer do
+          before do
+            @user = User.find_by(discord_uid: params[:user_id])
+          end
+
+          namespace :server do
+            route_param :server_id, type: Integer do
+              before do
+                @character = @user.characters.where(discord_server_uid: params[:server_id]).first
+              end
+              mount Characters
+            end
+          end
+        end
+      end
+
+    end
   end
 end

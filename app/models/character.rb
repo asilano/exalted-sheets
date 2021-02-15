@@ -86,8 +86,14 @@ class Character < ApplicationRecord
   accepts_nested_attributes_for :intimacies, reject_if: :all_blank, allow_destroy: true
   has_many :charms, -> { order 'ability' }, inverse_of: :character
   accepts_nested_attributes_for :charms, reject_if: :all_blank, allow_destroy: true
-  has_many :health_levels, -> { order 'penalty DESC' }, inverse_of: :character
+  has_many :health_levels, -> { order "
+    CASE
+      WHEN penalty == 'I' THEN -99
+      WHEN penalty <> 'I' THEN cast(penalty as unsigned)
+     END DESC" }, inverse_of: :character
   accepts_nested_attributes_for :health_levels, reject_if: :all_blank, allow_destroy: true
+
+  before_save :reorder_damage
 
   def personal_pool
     case spark
@@ -138,5 +144,24 @@ class Character < ApplicationRecord
   end
   def join_battle
     wits + awareness
+  end
+
+  def hl_penalty
+    worst_injury = health_levels.where.not(damaged: :ok).last
+    if worst_injury
+      worst_injury.penalty == 'I' ? :incap : worst_injury.penalty.to_i
+    else
+      0
+    end
+  end
+
+  private
+
+  def reorder_damage
+    injuries = health_levels.map(&:damaged).tally
+    ordered = injuries.sort_by { |kind, num| HealthLevel.damageds[kind] }.reverse
+    expanded = ordered.map { |kind, num| [kind] * num }.flatten
+
+    health_levels.zip(expanded).each { |hl, damage| hl.damaged = damage }
   end
 end

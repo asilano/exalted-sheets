@@ -44,3 +44,8 @@ en:
       permanent_ess: Essence
       committed_ess: Committed
       remaining_personal_ess: Remain
+      anima_levels:
+        '0': 0 - Dim
+        '1': 1 - Glowing
+        '2': 2 - Burning
+        '3': 3 - Iconic

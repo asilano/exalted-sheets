@@ -80,7 +80,8 @@
   input[type=number] {
     width: 5em;
   }
-  .small-num input[type=number] {
+  .small-num input {
+    text-align: center;
     width: 3em;
   }
   .long-field input {
@@ -89,6 +90,15 @@
   .large-area textarea {
     height: 100%;
     width: 100%;
+  }
+
+  .small-stack {
+    display: inline-block;
+  }
+
+  .damaged {
+    display: inline-block;
+    height: 0;
   }
 
   .spacer {

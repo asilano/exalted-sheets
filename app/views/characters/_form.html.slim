@@ -147,6 +147,9 @@
       .field.centred
         = form.label :committed_ess, t('.committed_ess')
         = form.number_field :committed_ess
+      .field.centred
+        = form.label :anima_level
+        = form.select :anima_level, 0.upto(3).map { |level| [t(".anima_levels.#{level}"), level] }
     .sheet-col
       .centred
         = form.label :limit_trigger
@@ -236,7 +239,12 @@
     .sheet-col.full-width
       .label Health Levels
       = form.fields_for :health_levels do |hlf|
-        span.small-num = hlf.number_field :penalty
+        .small-stack
+          span.small-num = hlf.text_field :penalty
+          br
+          span.damaged = hlf.object.damaged.to_s[0].upcase if hlf.object.penalty.present?
+          - if hlf.object.penalty.present?
+            = hlf.hidden_field :damaged
 
     .header-bar.full-width
       span Intimacies
