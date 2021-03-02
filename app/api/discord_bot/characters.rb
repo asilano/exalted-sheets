@@ -30,6 +30,10 @@ module DiscordBot
       end
     end
 
+    get do
+      @character || {}
+    end
+
     get :pools do
       parsed = []
       response = params[:pools].to_h do |pool|

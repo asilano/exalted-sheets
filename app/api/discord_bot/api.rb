@@ -51,6 +51,7 @@ module DiscordBot
             route_param :server_id, type: Integer do
               before do
                 @character = @user.characters.where(discord_server_uid: params[:server_id]).first
+                error!('No active character', 404) unless @character
               end
               mount Characters
             end
