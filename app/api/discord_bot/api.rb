@@ -3,6 +3,7 @@ module DiscordBot
     AUTH_TOKEN = ENV['EXALTED_API_TOKEN']
     version 'v1'
     format :json
+    formatter :json, Grape::Formatter::ActiveModelSerializers
     prefix :api
 
     helpers do

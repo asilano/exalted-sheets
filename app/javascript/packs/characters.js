@@ -149,9 +149,9 @@ document.addEventListener('turbolinks:load', () => {
   //   elem.addEventListener('change', recalc)
   // for (var elem of $('input, select'))
   //   elem.addEventListener('change', recalc)
-  $('form')[0].addEventListener('change', recalc)
-  $('form')[0].addEventListener('cocoon:after-insert', recalc)
-  $('form')[0].addEventListener('cocoon:after-remove', recalc)
+  $('form').addEventListener('change', recalc)
+  $('form').addEventListener('cocoon:after-insert', recalc)
+  $('form').addEventListener('cocoon:after-remove', recalc)
 
   for (var elem of $('.damaged'))
     elem.addEventListener('click', next_damage)

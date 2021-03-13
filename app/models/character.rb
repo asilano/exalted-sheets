@@ -86,11 +86,11 @@ class Character < ApplicationRecord
   accepts_nested_attributes_for :intimacies, reject_if: :all_blank, allow_destroy: true
   has_many :charms, -> { order 'ability' }, inverse_of: :character
   accepts_nested_attributes_for :charms, reject_if: :all_blank, allow_destroy: true
-  has_many :health_levels, -> { order "
+  has_many :health_levels, -> { order Arel.sql("
     CASE
       WHEN penalty == 'I' THEN -99
       WHEN penalty <> 'I' THEN cast(penalty as unsigned)
-     END DESC" }, inverse_of: :character
+     END DESC") }, inverse_of: :character
   accepts_nested_attributes_for :health_levels, reject_if: :all_blank, allow_destroy: true
 
   before_save :reorder_damage
