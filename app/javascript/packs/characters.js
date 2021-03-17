@@ -43,6 +43,9 @@ function parry() {
     defence = field_int(weapon.querySelector('.defence input'))
   }
 
+  if (ability === undefined)
+    return 0
+
   var dexterity = field_int($('#character_dexterity')[0])
   var abil_score = field_int($('#character_' + ability)[0])
   return Math.ceil((dexterity + abil_score) / 2) + defence
@@ -149,9 +152,9 @@ document.addEventListener('turbolinks:load', () => {
   //   elem.addEventListener('change', recalc)
   // for (var elem of $('input, select'))
   //   elem.addEventListener('change', recalc)
-  $('form').addEventListener('change', recalc)
-  $('form').addEventListener('cocoon:after-insert', recalc)
-  $('form').addEventListener('cocoon:after-remove', recalc)
+  $('form')[0].addEventListener('change', recalc)
+  $('form')[0].addEventListener('cocoon:after-insert', recalc)
+  $('form')[0].addEventListener('cocoon:after-remove', recalc)
 
   for (var elem of $('.damaged'))
     elem.addEventListener('click', next_damage)

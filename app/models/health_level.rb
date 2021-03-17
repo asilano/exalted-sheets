@@ -9,7 +9,7 @@ class HealthLevel < ApplicationRecord
     lethal:     2,
     aggravated: 3
   }
-  attribute :damaged, :integer, default: 0
+  attribute :damaged, :integer, default: :ok
 
   private
 
