@@ -28,6 +28,10 @@ module DiscordBot
           error!("Couldn't update character - #{@character.errors.full_messages.join(', ')}", 400)
         end
       end
+
+      def unwield_weapons
+        @character.weapons.update(wielded: false)
+      end
     end
 
     get do
@@ -80,6 +84,11 @@ module DiscordBot
                 'char_name'   => @character.name)
     end
 
+    get :weapons do
+      present :char_name, @character.name
+      present :weapons, ActiveModel::SerializableResource.new(@character.weapons)
+    end
+
     post :pay do
       amount = -params[:amount].to_i
       adjust(params[:resource], amount)
@@ -87,6 +96,19 @@ module DiscordBot
     post :gain do
       amount = params[:amount].to_i
       adjust(params[:resource], amount)
+    end
+
+    post :wield_weapon do
+      unwield_weapons
+      weapon = @character.weapons.where(
+        Weapon.arel_table[:name].lower.matches(
+          "%#{params[:weapon].downcase.gsub(Regexp.union("\\", "%", "_")) { |x| ["\\", x].join }}%"
+        )).first
+      error!('No weapon with that name', 404) unless weapon
+
+      weapon.update(wielded: true)
+      present :char_name, @character.name
+      present :weapon, ActiveModel::SerializableResource.new(weapon)
     end
   end
 end

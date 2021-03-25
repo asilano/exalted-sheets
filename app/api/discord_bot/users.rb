@@ -12,7 +12,10 @@ module DiscordBot
 
     post :use_character do
       unuse_chars
-      char = @user.characters.where(Character.arel_table[:name].lower.matches(params[:name].downcase)).first
+      char = @user.characters.where(
+        Character.arel_table[:name].lower.matches(
+          "%#{params[:name].downcase.gsub(Regexp.union("\\", "%", "_")) { |x| ["\\", x].join }}%"
+        )).first
       error!('No character with that name', 404) unless char
 
       char.discord_server_uid = params[:server_uid]
