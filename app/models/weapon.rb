@@ -16,8 +16,8 @@ class Weapon < ApplicationRecord
   end
 
   def pool
-    return 0 unless ability
+    return 0 unless (abil = ability)
 
-    character.dexterity + character.send(ability)
+    character.dexterity + character.send(abil) + accuracy
   end
 end

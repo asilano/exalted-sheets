@@ -42,7 +42,7 @@ module DiscordBot
       parsed = []
       response = params[:pools].to_h do |pool|
         [
-          pool,
+          pool.to_sym,
           case pool.downcase
           when 'permwp'
             parsed << 'Willpower'
@@ -56,7 +56,7 @@ module DiscordBot
           when 'join'
             parsed << 'Join Battle'
             @character.join_battle
-          when 'rush', 'disengage'
+          when 'rush', 'disengage', 'wither'
             parsed << pool.titleize
             @character.send(pool.downcase)
           when /m-?a/
@@ -79,9 +79,12 @@ module DiscordBot
             end
           end
         ]
-      end.merge('penalty'     => @character.hl_penalty,
-                'parsed_pool' => parsed.join(' + '),
-                'char_name'   => @character.name)
+      end
+      response.each { |key, value| present key, value }
+      present :penalty, @character.hl_penalty
+      present :parsed_pool, parsed.join(' + ')
+      present :char_name, @character.name
+      present :weapon, ActiveModel::SerializableResource.new(@character.weapons.where(wielded: true).first)
     end
 
     get :weapons do

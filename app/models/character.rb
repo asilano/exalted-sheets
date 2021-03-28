@@ -145,6 +145,10 @@ class Character < ApplicationRecord
   def join_battle
     wits + awareness
   end
+  def wither
+    weapon = weapons.where(wielded: true).first
+    weapon&.pool
+  end
 
   def hl_penalty
     worst_injury = health_levels.where.not(damaged: :ok).last
