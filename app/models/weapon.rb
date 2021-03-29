@@ -15,9 +15,32 @@ class Weapon < ApplicationRecord
     (tags.map(&:downcase).map(&:underscore).map(&:to_sym) & Character::ABILITIES).first
   end
 
-  def pool
+  THROWN_ACCURACY = {
+    'close'   =>  4,
+    'short'   =>  3,
+    'medium'  =>  2,
+    'long'    => -1,
+    'extreme' => -3
+  }.freeze
+  ARCHERY_ACCURACY = {
+    'close'   => -2,
+    'short'   =>  4,
+    'medium'  =>  2,
+    'long'    =>  0,
+    'extreme' => -2
+  }.freeze
+  def pool(range: 'close')
     return 0 unless (abil = ability)
 
-    character.dexterity + character.send(abil) + accuracy
+    accur = case abil
+            when :thrown
+              THROWN_ACCURACY[range] + accuracy
+            when :archery
+              ARCHERY_ACCURACY[range] + accuracy
+            else
+              accuracy
+            end
+
+    character.dexterity + character.send(abil) + accur
   end
 end

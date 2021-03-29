@@ -145,9 +145,9 @@ class Character < ApplicationRecord
   def join_battle
     wits + awareness
   end
-  def wither
+  def wither(range: 'close')
     weapon = weapons.where(wielded: true).first
-    weapon&.pool
+    weapon&.pool(range: range)
   end
 
   def hl_penalty

@@ -56,12 +56,15 @@ module DiscordBot
           when 'join'
             parsed << 'Join Battle'
             @character.join_battle
-          when 'rush', 'disengage', 'wither'
+          when 'rush', 'disengage'
             parsed << pool.titleize
             @character.send(pool.downcase)
           when /m-?a/
             parsed << 'Martial Arts'
             @character.martial_arts
+          when 'wither'
+            parsed << 'Wither'
+            @character.wither(range: params[:range] || 'close')
           else
             possible = (Character::ABILITIES + Character::ATTRIBUTES).select do |thing|
               thing.to_s.start_with?(pool.downcase)
