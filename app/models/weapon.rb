@@ -41,6 +41,27 @@ class Weapon < ApplicationRecord
               accuracy
             end
 
+    if tags.include?('Flame') && range == 'close'
+      accur += 2
+    end
+
     character.dexterity + character.send(abil) + accur
+  end
+
+  # Base withering damage pool
+  def base_damage(range: 'close')
+    ret = if (tags & %w[Crossbow Flame]).present?
+            4
+          else
+            character.strength
+          end
+
+    ret += if tags.include?('Powerful') && range == 'close'
+             11
+           else
+             damage
+           end
+
+    ret
   end
 end

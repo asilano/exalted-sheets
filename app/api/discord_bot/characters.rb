@@ -56,7 +56,7 @@ module DiscordBot
           when 'join'
             parsed << 'Join Battle'
             @character.join_battle
-          when 'rush', 'disengage'
+          when 'rush', 'disengage', 'parry', 'evasion', 'damage'
             parsed << pool.titleize
             @character.send(pool.downcase)
           when /m-?a/

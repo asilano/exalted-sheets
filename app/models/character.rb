@@ -149,6 +149,10 @@ class Character < ApplicationRecord
     weapon = weapons.where(wielded: true).first
     weapon&.pool(range: range)
   end
+  def damage(range: 'close') # Base withering damage pool
+    weapon = weapons.where(wielded: true).first
+    weapon&.base_damage(range: range)
+  end
 
   def hl_penalty
     worst_injury = health_levels.where.not(damaged: :ok).last
