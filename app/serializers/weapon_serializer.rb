@@ -1,3 +1,3 @@
 class WeaponSerializer < AllSerializer
-  attributes :ability
+  attributes :ability, :damage_type
 end

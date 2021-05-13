@@ -15,6 +15,10 @@ class Weapon < ApplicationRecord
     (tags.map(&:downcase).map(&:underscore).map(&:to_sym) & Character::ABILITIES).first
   end
 
+  def damage_type
+    (tags.map(&:downcase).map(&:underscore) & HealthLevel.damageds.keys).first
+  end
+
   THROWN_ACCURACY = {
     'close'   =>  4,
     'short'   =>  3,
@@ -29,7 +33,7 @@ class Weapon < ApplicationRecord
     'long'    =>  0,
     'extreme' => -2
   }.freeze
-  def pool(range: 'close')
+  def pool(range: 'close', ignore_accuracy: false)
     return 0 unless (abil = ability)
 
     accur = case abil
@@ -45,7 +49,7 @@ class Weapon < ApplicationRecord
       accur += 2
     end
 
-    character.dexterity + character.send(abil) + accur
+    character.dexterity + character.send(abil) + (ignore_accuracy ? 0 : accur)
   end
 
   # Base withering damage pool

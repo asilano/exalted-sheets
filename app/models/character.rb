@@ -117,6 +117,10 @@ class Character < ApplicationRecord
     stamina + armours.map(&:soak).sum
   end
 
+  def hardness
+    armours.map(&:hardness).max
+  end
+
   # Static values - pool/2 round up
   def parry
     weapon = weapons.where(wielded: true).first
@@ -149,6 +153,10 @@ class Character < ApplicationRecord
     weapon = weapons.where(wielded: true).first
     weapon&.pool(range: range)
   end
+  def decisive(range: 'close')
+    weapon = weapons.where(wielded: true).first
+    weapon&.pool(range: range)
+  end
   def damage(range: 'close') # Base withering damage pool
     weapon = weapons.where(wielded: true).first
     weapon&.base_damage(range: range)
@@ -163,11 +171,21 @@ class Character < ApplicationRecord
     end
   end
 
+  def injure(levels, damage_type)
+    injuries = (health_levels.map(&:damaged) + [damage_type] * levels).tally
+    order_injuries(injuries)
+    save
+  end
+
   private
 
   def reorder_damage
     injuries = health_levels.map(&:damaged).tally
-    ordered = injuries.sort_by { |kind, num| HealthLevel.damageds[kind] }.reverse
+    order_injuries(injuries)
+  end
+
+  def order_injuries(injuries)
+    ordered = injuries.sort_by { |kind, _num| HealthLevel.damageds[kind] }.reverse
     expanded = ordered.map { |kind, num| [kind] * num }.flatten
 
     health_levels.zip(expanded).each { |hl, damage| hl.damaged = damage }

@@ -65,6 +65,9 @@ module DiscordBot
           when 'wither'
             parsed << 'Wither'
             @character.wither(range: params[:range] || 'close')
+          when 'decisive'
+            parsed << 'Decisive'
+            @character.decisive(range: params[:range] || 'close')
           else
             possible = (Character::ABILITIES + Character::ATTRIBUTES).select do |thing|
               thing.to_s.start_with?(pool.downcase)
@@ -87,12 +90,12 @@ module DiscordBot
       present :penalty, @character.hl_penalty
       present :parsed_pool, parsed.join(' + ')
       present :char_name, @character.name
-      present :weapon, ActiveModel::SerializableResource.new(@character.weapons.where(wielded: true).first)
+      present :weapon, ActiveModelSerializers::SerializableResource.new(@character.weapons.where(wielded: true).first)
     end
 
     get :weapons do
       present :char_name, @character.name
-      present :weapons, ActiveModel::SerializableResource.new(@character.weapons)
+      present :weapons, ActiveModelSerializers::SerializableResource.new(@character.weapons)
     end
 
     post :pay do
@@ -114,7 +117,24 @@ module DiscordBot
 
       weapon.update(wielded: true)
       present :char_name, @character.name
-      present :weapon, ActiveModel::SerializableResource.new(weapon)
+      present :weapon, ActiveModelSerializers::SerializableResource.new(weapon)
+    end
+
+    post :injure do
+      levels = params[:levels].to_i
+      damage_type = params[:damage_type].to_sym
+byebug
+      @character.injure(levels, damage_type)
+      if @character.save
+        {
+          'char_name'      => @character.name,
+          'damaged_levels' => @character.health_levels.where.not(damaged: :ok).count,
+          'new_penalty'    => @character.hl_penalty
+        }
+      else
+        error!("Couldn't update character - #{@character.errors.full_messages.join(', ')}", 400)
+      end
+
     end
   end
 end
