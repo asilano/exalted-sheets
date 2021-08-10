@@ -123,7 +123,7 @@ module DiscordBot
     post :injure do
       levels = params[:levels].to_i
       damage_type = params[:damage_type].to_sym
-byebug
+
       @character.injure(levels, damage_type)
       if @character.save
         {
