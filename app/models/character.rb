@@ -177,6 +177,17 @@ class Character < ApplicationRecord
     save
   end
 
+  def breath_of_war
+    periph_headroom = periph_pool - remaining_periph_ess
+    if periph_headroom > 5
+      self.remaining_periph_ess += 5
+      return
+    end
+
+    self.remaining_periph_ess = periph_pool
+    self.remaining_personal_ess = (remaining_personal_ess + 5 - periph_headroom).clamp(0..personal_pool)
+  end
+
   private
 
   def reorder_damage

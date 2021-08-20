@@ -134,7 +134,19 @@ module DiscordBot
       else
         error!("Couldn't update character - #{@character.errors.full_messages.join(', ')}", 400)
       end
+    end
 
+    post :breath_of_war do
+      @character.breath_of_war
+      if @character.save
+        {
+          'char_name' => @character.name,
+          'pers'      => @character.remaining_personal_ess,
+          'periph'    => @character.remaining_periph_ess
+        }
+      else
+        error!("Couldn't update character - #{@character.errors.full_messages.join(', ')}", 400)
+      end
     end
   end
 end
